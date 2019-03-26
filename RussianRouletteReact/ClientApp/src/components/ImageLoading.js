@@ -14,12 +14,11 @@ export class ImageLoading extends Component {
         super(props);
         this.state = { isVisible: true };
         this.state = { SeeImage: "Yes" };
-        // this.state = { isFiringAway: this.props.isFiringAway }; //not working
+        this.state = { isFiringAway: this.props.isFiringAway }; //not working
         this.state = { currentCount: this.props.currentCount }; //not working
-        //  this.state = { FireAwayText: "No Data" };
         this.selectImage();
 
-
+        //Array from Counter
         //currentCount = { this.state.currentCount }
         //FireAwayText = { this.state.FireAwayText }
         //FireAway = { this.state.FireAway }
@@ -59,8 +58,6 @@ export class ImageLoading extends Component {
     }
 
 }
-//export default ImageLoading; // Don’t forget to use export default!
-                //<img src={pieAtYou} alt="FireAtYour" />  
 
 //array of paths
     //const imagesPath = {

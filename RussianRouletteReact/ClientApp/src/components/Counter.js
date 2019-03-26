@@ -26,7 +26,7 @@ export class Counter extends Component {
             data: [{
                 currentCount: 0,
                 FireAway: 2,
-                FireAwayText: "Fire Away now!",
+                FireAwayText: "Ducking",
                 isFiringAway: false,
                 WinOrLose: ""
             }]
@@ -37,7 +37,7 @@ export class Counter extends Component {
         this.state = { StartNumber: 0 };
         this.state = { FireAway: 2 };
         this.state = { BangText: "Bzzzz!" };
-        this.state = { FireAwayText: "Fire Away now!" };
+        this.state = { FireAwayText: "Ducking" };
         this.state = { isFiringAway: false };
         this.state = { WinOrLose: "" };
 
@@ -56,19 +56,19 @@ export class Counter extends Component {
     //setState() schedules an update to a component’s state object. When state changes, the component responds by re-rendering.
 
 
-    //Reset for new round
+    //Reset for new round   
     Reset() {
         const min = 1;
         const max = 7;
-        this.setState({ random: Math.floor(min + Math.random() * (max - min)) });//shows the intial spin number 
+        this.setState((state) => { return { random: Math.floor(min + Math.random() * (max - min)) }; });//shows the intial spin number 
 
-        this.setState({ currentCount: this.state.random }); //bullets count
-        this.setState({ StartNumber: this.state.random }); //shows the countdown number
-        this.setState({ FireAway: 2 });
+        this.setState((state) => { return { currentCount: this.state.random }; }); //bullets count
+        this.setState((state) => { return { StartNumber: this.state.random }; }); //shows the countdown number
+        this.setState((state) => { return { FireAway: 2 }; });
         this.setState({ WinOrLose: "Game On!" });
         this.setState({ BangText: "Bzzzzzzzzzz" });
         this.setState({ WinOrLose: "" });
-        // this.setState({ FireAwayText: "Firing Away! " });
+        this.setState({ FireAwayText: "Throwing At You" });
     }
 
 
@@ -80,18 +80,18 @@ export class Counter extends Component {
             return { currentCount: this.state.currentCount - 1 };
         });
 
-        this.setState({ isFiringAway: false });
+        this.setState((state) => { return { isFiringAway: false }; });
         this.GamePlay();
     }
     //Fireaway Method
     FireAwayCounter() {
-        this.setState({ FireAway: this.state.FireAway - 1 });
-        this.setState({ isFiringAway: true });
+        this.setState((state) => { return { FireAway: this.state.FireAway - 1 }; });
+        this.setState((state) => { return { isFiringAway: true }; });
         // this.GamePlay();
 
         if (this.state.FireAway === 0) {
             this.setState({ FireAway: 0 });
-            this.setState({ FireAwayText: "No More Fire Away!" });
+            this.setState({ FireAwayText: "No More Ducking!" });
             this.setState({ isFiringAway: false });
         }
 
@@ -101,11 +101,11 @@ export class Counter extends Component {
     GamePlay() {
         if (this.state.isFiringAway === true && this.state.currentCount > 0) {
             this.setState({ BangText: "PING!" });
-            this.setState({ FireAwayText: "Firing Away! " });
+            this.setState({ FireAwayText: "Ducking! " });
         }
         if (this.state.isFiringAway === false && this.state.currentCount > 0) {
             this.setState({ BangText: "BANG!" });
-            this.setState({ FireAwayText: "Firing At You" });
+            this.setState({ FireAwayText: "Throwing At You" });
         }
         if (this.state.isFiringAway === true && this.state.currentCount === 1) {
             this.setState({ WinOrLose: "Winner" });
@@ -119,14 +119,14 @@ export class Counter extends Component {
             <div>
                 <h1>Russian Roulette <strong>{this.state.WinOrLose}</strong></h1>
                 <p>Sound Effects <strong>{this.state.BangText}</strong>.</p>
-                <p>Fire Away countdown: <strong> {this.state.FireAway}</strong>.</p>
-                <p>Am I Firing Away? <strong>{this.state.FireAwayText} </strong>.</p>
+                <p>Ducking countdown: <strong> {this.state.FireAway}</strong>.</p>
+                <p>Am I Ducking? <strong>{this.state.FireAwayText} </strong>.</p>
 
                 <p>Spin Number: <strong>{this.state.StartNumber}</strong>   -   <strong>{this.state.currentCount} Bullets</strong></p>
 
-                <button onClick={this.Spin}>Spin the Chamber</button>
-                <button onClick={this.Counter}>Fire the Gun</button>
-                <button onClick={this.FireAwayCounter}>Point Gun Away</button>
+                <button onClick={this.Spin}>Make the Pies</button>
+                <button onClick={this.Counter}>Throw the Pie</button>
+                <button onClick={this.FireAwayCounter}>Duck</button>
 
                 <ImageLoading currentCount={this.state.currentCount}
                     FireAwayText={this.state.FireAwayText}

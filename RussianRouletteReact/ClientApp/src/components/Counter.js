@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import { ImageLoading } from './ImageLoading';
-
-
-//import pieAtYou from "../images/pieFireAtYou.jpg";
-//import pieStart from "../images/pieStart.jpg";
-//import pieThrow from "../images/PieThrow.jpg";
 //todo RND number generater
 //todo counter 
 //todo FireAway
 
 //todo Fire method 
 //todo Spin Method = passes the rnd to the counter
-
+//https://github.com/zeyadetman/howmanybooks/blob/master/src/components/Library/Library.jsx
 //https://hackernoon.com/learn-react-js-how-to-build-a-simple-rock-paper-scissors-game-b57ca663ec02
+//https://devhints.io/react
 
 export class Counter extends Component {
     displayName = "Russian Roulette";
@@ -26,16 +22,16 @@ export class Counter extends Component {
 
         //The “state” is the sum of the things inside of a React Component that can change AFTER that component is built.
         // The state of a React component is often used with a comparison to the props of that Component.Opposite to the state, the props cannot be modified once the component is created.
+        this.state = {
+            data: [{
+                currentCount: 0,
+                FireAway: 2,
+                FireAwayText: "Fire Away now!",
+                isFiringAway: false,
+                WinOrLose: ""
+            }]
+        };
 
-        //array of paths
-        //const imagesPath = {
-        //    pieAtYou: "../images/pieFireAtYou.jpg",
-        //    pieStart: "../images/pieStart.jpg",
-        //    pieThrow: "../images/PieThrow.jpg"
-        //};
-
-
-        // this.state = { image: imagesPath[pieAtYou] };
         this.state = { currentCount: 0 };
         this.state = { random: 0 };
         this.state = { StartNumber: 0 };
@@ -91,7 +87,7 @@ export class Counter extends Component {
     FireAwayCounter() {
         this.setState({ FireAway: this.state.FireAway - 1 });
         this.setState({ isFiringAway: true });
-        this.GamePlay();
+        // this.GamePlay();
 
         if (this.state.FireAway === 0) {
             this.setState({ FireAway: 0 });
@@ -118,29 +114,25 @@ export class Counter extends Component {
             this.setState({ WinOrLose: "Lose" });
         }
     }
-
-
     render() {
         return (
             <div>
                 <h1>Russian Roulette <strong>{this.state.WinOrLose}</strong></h1>
                 <p>Sound Effects <strong>{this.state.BangText}</strong>.</p>
-                <p>Can I Fire Away? <strong> {this.state.FireAway}</strong>.</p>
+                <p>Fire Away countdown: <strong> {this.state.FireAway}</strong>.</p>
                 <p>Am I Firing Away? <strong>{this.state.FireAwayText} </strong>.</p>
 
                 <p>Spin Number: <strong>{this.state.StartNumber}</strong>   -   <strong>{this.state.currentCount} Bullets</strong></p>
 
                 <button onClick={this.Spin}>Spin the Chamber</button>
-
-                <p>.. </p>
-
                 <button onClick={this.Counter}>Fire the Gun</button>
-
-                <p>Fire Away countdown: <strong>{this.state.FireAway}</strong></p>
-
                 <button onClick={this.FireAwayCounter}>Point Gun Away</button>
-                <p>...</p>
-                <ImageLoading counter={this.state.currentCount} />
+
+                <ImageLoading currentCount={this.state.currentCount}
+                    FireAwayText={this.state.FireAwayText}
+                    FireAway={this.state.FireAway}
+                    isFiringAway={this.state.isFiringAway}
+                />
             </div >
 
 

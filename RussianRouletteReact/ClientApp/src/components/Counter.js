@@ -85,7 +85,7 @@ export class Counter extends Component {
     //Fireaway Method
     FireAwayCounter() {
         this.setState((state) => { return { FireAway: this.state.FireAway - 1 }; });
-        this.setState((state) => { return { isFiringAway: true }; });
+        this.setState((state) => { return { isFiringAway: !this.state.isFiringAway }; });
 
         if (this.state.FireAway <= 0) {
             this.setState({ FireAway: 0 });

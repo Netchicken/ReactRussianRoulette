@@ -3,6 +3,7 @@ import pieAtYou from "../images/pieFireAtYou.jpg";
 import pieStart from "../images/pieStart.jpg";
 import pieThrow from "../images/PieThrow.jpg";
 
+
 //https://github.com/zeyadetman/howmanybooks/blob/master/src/components/Library/Library.jsx
 //https://www.robinwieruch.de/react-pass-props-to-component/
 //https://hackernoon.com/learn-react-js-how-to-build-a-simple-rock-paper-scissors-game-b57ca663ec02
@@ -12,47 +13,65 @@ export class ImageLoading extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { isVisible: true };
-        this.state = { SeeImage: "Yes" };
-        this.state = { isFiringAway: this.props.isFiringAway }; //not working
-        this.state = { currentCount: this.props.currentCount }; //not working
-        this.selectImage();
+        this.state = { isVisiblepieAtYou: true }; //start visible turn to false on fireaway
+        this.state = { isVisiblePieStart: true }; //start visible turn to false on current count change
+        this.state = { isVisiblePiethrow: true };
+        this.state = { isFiringAway: this.props.isFiringAway };
+        this.state = { LocalCurrentCount: this.props.currentCount };
 
         //Array from Counter
         //currentCount = { this.state.currentCount }
         //FireAwayText = { this.state.FireAwayText }
         //FireAway = { this.state.FireAway }
         //isFiringAway = { this.state.isFiringAway }
-
-
     }
-    selectImage() {
-        const currentcount = this.props.currentCount;
-        //   const FireAwayText = this.props.FireAwayText;
+    //triggers on change of a component - can be dodgy use with care (if you have different users)
+    componentWillReceiveProps(nextProps) {
+        // Any time props.isFiringAway changes, toggle images
+                if (nextProps.isFiringAway !== this.props.isFiringAway) {
 
-        if (currentcount > 3) {
-            this.setState({ isVisible: !this.state.isVisible });
-            this.setState({ SeeImage: "No" });
+            if (this.props.isFiringAway === true) {
+                this.setState({ isVisiblepieAtYou: !this.state.isVisiblepieAtYou });
+            }
+            if (this.props.isFiringAway === false) {
+                this.setState({ isVisiblepieAtYou: !this.state.isVisiblepieAtYou });
+                this.setState({ isVisiblePieThrow: !this.state.isVisiblePieThrow });
+            }
         }
-        //if (isfiringaway) {
-        //    this.setState({ FireAwayText: "Firing Away! " });
-        //}
-        //if (isfiringaway === false) {
-        //    this.setState({ FireAwayText: "Firing At You! " });
-        //}
+    }
+
+    toggleImages = () => {
+        this.setState({ isVisiblepieAtYou: !this.state.isVisiblepieAtYou });
+        this.setState({ isVisiblePieStart: !this.state.isVisiblePieStart });
     }
 
     render() {
         return (
             <div>
-                <p> <button onClick={() => this.setState({ isVisible: !this.state.isVisible })}>
-                    Toggle the image </button><strong>{this.props.currentCount} Bullets - See Image {this.state.SeeImage}  - Fire Text {this.props.FireAwayText}</strong></p>
+                <p> <button onClick={this.toggleImages}> Toggle the image </button>
+                    <strong>{this.props.currentCount} Bullets - See Image {this.state.SeeImage}  - Fire Text {this.props.FireAwayText}
+                    </strong>
+                </p>
 
-
-                {this.state.isVisible ? <img width="20%" height="20%" src={pieAtYou} /> : this.state.SeeImage
+                {
+                    this.props.currentCount === 3 ? this.toggleImages : null
                 }
-                <img width="20%" height="20%" src={pieStart} alt="FireAtYour" />
-                <img width="20%" height="20%" src={pieThrow} alt="FireAtYour" />
+
+                {
+                    this.state.isVisiblepieAtYou ? <img width="20%" height="20%" src={pieAtYou} /> : null
+                }
+                {
+                    this.state.isVisiblePieStart ? <img width="20%" height="20%" src={pieStart} /> :
+                        null
+                }
+
+                {
+                    this.state.isVisiblePieThrow ? <img width="20%" height="20%" src={pieThrow} /> :
+                        null
+                }
+
+
+              //  <img width="20%" height="20%" src={pieThrow} alt="FireAtYour" />
             </div >
         );
     }

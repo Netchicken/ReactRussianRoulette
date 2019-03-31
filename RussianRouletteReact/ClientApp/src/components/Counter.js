@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { ImageLoading } from './ImageLoading';
 import piePans from "../images/6PiePans.jpg";
+import { Grid, Row, Col, fluid, roundedCircle } from 'react-bootstrap';
+import { Image } from 'react-bootstrap';
 
 //todo RND number generater
 //todo counter 
@@ -11,6 +13,9 @@ import piePans from "../images/6PiePans.jpg";
 //https://github.com/zeyadetman/howmanybooks/blob/master/src/components/Library/Library.jsx
 //https://hackernoon.com/learn-react-js-how-to-build-a-simple-rock-paper-scissors-game-b57ca663ec02
 //https://devhints.io/react
+
+//https://react-bootstrap.github.io/components/alerts
+
 
 export class Counter extends Component {
     displayName = "Russian Roulette";
@@ -82,17 +87,24 @@ export class Counter extends Component {
         });
         this.GamePlay();
     }
+
     //Fireaway Method
     FireAwayCounter() {
+
+        //capture multiple fireaways without the counter decreasing
+        if (this.state.isFiringAway === true) {
+            return null;
+
+        }
         this.setState((state) => { return { FireAway: this.state.FireAway - 1 }; });
-        this.setState((state) => { return { isFiringAway: !this.state.isFiringAway }; });
+        this.setState((state) => { return { isFiringAway: true }; });
 
         if (this.state.FireAway <= 0) {
             this.setState({ FireAway: 0 });
             this.setState({ FireAwayText: "No More Ducking!" });
             this.setState({ isFiringAway: false });
         }
-
+        //  this.GamePlay();
     }
 
     //Win or lose and final calculations
@@ -115,28 +127,42 @@ export class Counter extends Component {
     }
     render() {
         return (
-            <div>
-                <h1>Russian Roulette <strong>{this.state.WinOrLose}</strong></h1>
-                There is a pie aimed at you. Duck when its thrown and you win
+
+            <Grid fluid>
+                <Row>
+
+                    <Col xs={6} md={8}>
+                        <h1>Russian Roulette <strong>{this.state.WinOrLose}</strong></h1>
+                        There is a pie aimed at you. Duck when its thrown and you win
                 <br></br>You have 2 chances to duck, you have 1 chance in 6 of getting hit
-                 <img width="20%" height="20%" src={piePans} alt="piepans" />
-
+                                                                                                                                                                        
+                                                                                                                                                         
                 <p>Sound Effects <strong>{this.state.BangText}</strong>. </p>
-                <p>Ducking countdown: <strong> {this.state.FireAway}  {this.state.isFiringAway ? "True" : "False"}</strong>.</p>
-                <p>Am I Ducking? <strong>{this.state.FireAwayText} </strong>.</p>
+                        <p>Ducking countdown: <strong> {this.state.FireAway}  {this.state.isFiringAway ? "True" : "False"}</strong>.</p>
+                        <p>Am I Ducking? <strong>{this.state.FireAwayText} </strong>.</p>
 
-                <p>Pie Number: <strong>{this.state.StartNumber}</strong>   -   <strong>{this.state.currentCount} Pie Tins</strong></p>
+                        <p>Pie Number: <strong>{this.state.StartNumber}</strong>   -   <strong>{this.state.currentCount} Pie Tins</strong></p>
 
-                <button onClick={this.Spin}>Make the Pie</button>
-                <button onClick={this.Counter}>Throw the Pie Tin</button>
-                <button onClick={this.FireAwayCounter}>Duck</button>
+                        <button onClick={this.Spin}>Make the Pie</button>
+                        <button onClick={this.Counter}>Throw the Pie Tin</button>
+                        <button onClick={this.FireAwayCounter}>Duck</button>
 
-                <ImageLoading currentCount={this.state.currentCount}
-                    FireAwayText={this.state.FireAwayText}
-                    FireAway={this.state.FireAway}
-                    isFiringAway={this.state.isFiringAway}
-                />
-            </div >
+
+
+                    </Col>
+                    <Col xs={6} md={4}>
+                        <Image width="50%" height="50%" src={piePans} alt="piepans" fluid roundedCircle />
+
+                        <ImageLoading currentCount={this.state.currentCount}
+                            FireAwayText={this.state.FireAwayText}
+                            FireAway={this.state.FireAway}
+                            isFiringAway={this.state.isFiringAway}
+                        />
+                    </Col>
+                </Row>
+
+            </Grid >
+
         );
     }
 }

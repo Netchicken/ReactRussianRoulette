@@ -1,0 +1,18 @@
+﻿
+
+//https://github.com/zeyadetman/howmanybooks/blob/master/src/components/Library/Library.jsx
+//https://hackernoon.com/learn-react-js-how-to-build-a-simple-rock-paper-scissors-game-b57ca663ec02
+//https://devhints.io/react
+
+//https://react-bootstrap.github.io/components/alerts
+//images
+//https://github.com/zeyadetman/howmanybooks/blob/master/src/components/Library/Library.jsx
+//https://www.robinwieruch.de/react-pass-props-to-component/
+//https://hackernoon.com/learn-react-js-how-to-build-a-simple-rock-paper-scissors-game-b57ca663ec02
+//https://stackoverflow.com/questions/53742787/react-passing-boolean-value-to-component
+
+   The “state” is the sum of the things inside of a React Component that can change AFTER that component is built.
+   
+   The state of a React component is often used with a comparison to the props of that Component.Opposite to the state, the props cannot be modified once the component is created.
+
+    //Calls to setState are asynchronous - don’t rely on this.state to reflect the new value immediately after calling setState. Pass an updater function instead of an object if you need to compute values based on the current state

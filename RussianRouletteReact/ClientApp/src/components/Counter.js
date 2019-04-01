@@ -1,20 +1,7 @@
 import React, { Component } from 'react';
 import { ImageLoading } from './ImageLoading';
-import piePans from "../images/6PiePans.jpg";
-import { Grid, Row, Col, fluid, roundedCircle } from 'react-bootstrap';
-import { Image } from 'react-bootstrap';
-
-//todo RND number generater
-//todo counter 
-//todo FireAway
-
-//todo Fire method 
-//todo Spin Method = passes the rnd to the counter
-//https://github.com/zeyadetman/howmanybooks/blob/master/src/components/Library/Library.jsx
-//https://hackernoon.com/learn-react-js-how-to-build-a-simple-rock-paper-scissors-game-b57ca663ec02
-//https://devhints.io/react
-
-//https://react-bootstrap.github.io/components/alerts
+import { Grid, Row, Col } from 'react-bootstrap';
+import { fluid, roundedCircle } from 'react-bootstrap';
 
 
 export class Counter extends Component {
@@ -22,22 +9,10 @@ export class Counter extends Component {
 
     constructor(props) {
         super(props);
-        //global variables
 
-        //  const image = new Image();
-        //  image.src = pieAtYou;
+        //Constructor is the only place where you should assign this.state directly. In all other methods, you need to use this.setState() instead.
 
-        //The “state” is the sum of the things inside of a React Component that can change AFTER that component is built.
-        // The state of a React component is often used with a comparison to the props of that Component.Opposite to the state, the props cannot be modified once the component is created.
-        this.state = {
-            data: [{
-                currentCount: 0,
-                FireAway: 2,
-                FireAwayText: "Ducking",
-                isFiringAway: false,
-                WinOrLose: ""
-            }]
-        };
+        //Avoid copying props into state! This is a common mistake:
 
         this.state = { currentCount: 0 };
         this.state = { random: Math.floor(1 + Math.random() * (7 - 1)) };
@@ -53,13 +28,11 @@ export class Counter extends Component {
         this.Spin = this.Spin.bind(this);
         this.FireAwayCounter = this.FireAwayCounter.bind(this);
     }
-
     //spin Method
     Spin() {
         this.Reset();
         this.GamePlay();
     }
-
     //setState() schedules an update to a component’s state object. When state changes, the component responds by re-rendering.
 
     //Reset for new round   
@@ -97,7 +70,10 @@ export class Counter extends Component {
 
         }
         this.setState((state) => { return { FireAway: this.state.FireAway - 1 }; });
-        this.setState((state) => { return { isFiringAway: true }; });
+        // this.setState((state) => { return { isFiringAway: true }; });
+        this.setState({ FireAwayText: "Ducking! " });
+        this.setState({ BangText: "Splog!" });
+        this.setState({ isFiringAway: true });
 
         if (this.state.FireAway <= 0) {
             this.setState({ FireAway: 0 });
@@ -123,7 +99,7 @@ export class Counter extends Component {
         if (this.state.isFiringAway === false && this.state.currentCount === 1) {
             this.setState({ WinOrLose: "Lose" });
         }
-        this.setState((state) => { return { isFiringAway: false }; });
+        this.setState({ isFiringAway: false });
     }
     render() {
         return (
@@ -135,8 +111,7 @@ export class Counter extends Component {
                         <h1>Russian Roulette <strong>{this.state.WinOrLose}</strong></h1>
                         There is a pie aimed at you. Duck when its thrown and you win
                 <br></br>You have 2 chances to duck, you have 1 chance in 6 of getting hit
-                                                                                                                                                                        
-                                                                                                                                                         
+                                                                                                          
                 <p>Sound Effects <strong>{this.state.BangText}</strong>. </p>
                         <p>Ducking countdown: <strong> {this.state.FireAway}  {this.state.isFiringAway ? "True" : "False"}</strong>.</p>
                         <p>Am I Ducking? <strong>{this.state.FireAwayText} </strong>.</p>
@@ -147,13 +122,10 @@ export class Counter extends Component {
                         <button onClick={this.Counter}>Throw the Pie Tin</button>
                         <button onClick={this.FireAwayCounter}>Duck</button>
 
-
-
                     </Col>
                     <Col xs={6} md={4}>
-                        <Image width="50%" height="50%" src={piePans} alt="piepans" fluid roundedCircle />
-
-                        <ImageLoading currentCount={this.state.currentCount}
+                        <ImageLoading
+                            currentCount={this.state.currentCount}
                             FireAwayText={this.state.FireAwayText}
                             FireAway={this.state.FireAway}
                             isFiringAway={this.state.isFiringAway}
